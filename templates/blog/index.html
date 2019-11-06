@@ -1,0 +1,38 @@
+{% extends "blog/base.html" %}
+
+{% block title %}TEJARONIC{% endblock %}
+
+{% block content %}
+
+{% for post in posts %}
+<article class="masonry__brick entry format-standard" data-aos="fade-up">
+                    <div class="entry__thumb">
+                        <a href="single-standard.html" class="entry__thumb-link">
+                            <img src="" alt="">
+                        </a>
+                    </div>
+                    <div class="entry__text">
+                        <div class="entry__header">
+                            <div class="entry__date">
+                                <a href="{% url 'blog:post_detail' post.slug %}">{{ post.publish }}<br>by {{ post.author }}</a>
+                            </div>
+                            <h1 class="entry__title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h1>
+                        </div>
+                        <div class="entry__excerpt">
+                            <p>
+                                {{ post.body|truncatewords:30|linebreaks }}
+                            </p>
+                        </div>
+                        <!--
+                        <div class="entry__meta">
+                            <span class="entry__meta-links">
+                                <a href="category.html">Design</a> 
+                                <a href="category.html">Photography</a>
+                            </span>
+                        </div>
+                        -->
+                    </div>
+</article> <!-- end article -->
+{% endfor %}
+
+{% endblock %}
