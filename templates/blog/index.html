@@ -4,6 +4,12 @@
 
 {% block content %}
 
+ <section class="s-content">
+
+        <div class="row masonry-wrap">
+            <div class="masonry">
+
+                <div class="grid-sizer"></div>
 {% for post in posts %}
 <article class="masonry__brick entry format-standard" data-aos="fade-up">
                     <div class="entry__thumb">
@@ -34,5 +40,10 @@
                     </div>
 </article> <!-- end article -->
 {% endfor %}
+            </div> <!-- end masonry -->
+        </div> <!-- end masonry-wrap -->
+        {% include "blog/pagination.html" with page=posts %}
+
+    </section> <!-- s-content -->
 
 {% endblock %}

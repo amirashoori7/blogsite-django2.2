@@ -1,0 +1,40 @@
+{% extends "blog/base.html" %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+    <!-- contact us form -->
+    <section class="s-content s-content--narrow">
+        <div class="row">
+            <div class="s-content__header col-full">
+                <h1 class="s-content__header-title">
+                   Contact Us
+                </h1>
+            </div> 
+            <div class="col-full s-content__main">
+                {% if sent %}
+                <h3>Thank you! Your message has been sent successfully</h3>
+                {% else %}
+                <form method="post" action=".">
+                    <fieldset>
+                        <div class="form-field">
+                            <input name="subject" type="text" id="subject" class="full-width" placeholder="Subject" value="">
+                        </div>
+                        <div class="form-field">
+                            <input name="name" type="text" id="name" class="full-width" placeholder="Your Name" value="">
+                        </div>
+                        <div class="form-field">
+                            <input name="email" type="text" id="email" class="full-width" placeholder="Your Email" value="">
+                        </div>
+                        <div class="message form-field">
+                        <textarea name="message" id="message" class="full-width" placeholder="Your Message" ></textarea>
+                        </div>
+                        {% csrf_token %}
+                        <button type="submit" class="submit btn btn--primary full-width">Submit</button>
+                    </fieldset>
+                </form> 
+            </div> 
+        </div>
+    </section> 
+ {% endif %}
+{% endblock %}
+

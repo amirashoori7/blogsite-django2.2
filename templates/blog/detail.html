@@ -1,0 +1,57 @@
+{% extends "blog/base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <!-- s-content
+    ================================================== -->
+    <section class="s-content s-content--narrow s-content--no-padding-bottom">
+
+        <article class="row format-standard">
+
+            <div class="s-content__header col-full">
+                <h1 class="s-content__header-title">
+                    {{post.title}}
+                </h1>
+                <ul class="s-content__header-meta">
+                    <li class="date">{{post.publish}}</li>
+                    <li class="cat">
+                        In
+                        <a>tags</a>
+                    </li>
+                </ul>
+            </div> <!-- end s-content__header -->
+    
+            <div class="s-content__media col-full">
+                <div class="s-content__post-thumb">
+                    <img src="{{post.cover.url}}" alt="" >
+                </div>
+            </div> <!-- end s-content__media -->
+
+            <div class="col-full s-content__main">
+
+                <p class="lead">{{post.body|linebreaks}}</p>
+                
+              <div class="s-content__author">
+                    <img src="" alt="">
+
+                    <div class="s-content__author-about">
+                        <h4 class="s-content__author-name">
+                            <a href="#0">{{post.author}}</a>
+                        </h4>
+                    </div>
+                </div>
+                 <div class="s-content__pagenav">
+                    <div class="s-content__nav">
+                        <div class="s-content__prev">
+                        </div>
+                        <div class="s-content__next">
+                        </div>
+                    </div>
+                </div> <!-- end s-content__pagenav -->
+
+
+            </div> <!-- end s-content__main -->
+
+        </article>
+   </section>
+{% endblock %}
