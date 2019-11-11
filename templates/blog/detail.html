@@ -48,10 +48,64 @@
                         </div>
                     </div>
                 </div> <!-- end s-content__pagenav -->
-
-
-            </div> <!-- end s-content__main -->
-
         </article>
+                        </div> <!-- end s-content__main -->
+  
+            <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="col-full">
+                    {% with comments.count as total_comments %}
+                    <h3 class="h2">{{ total_comments }} comment {{ total_comments|pluralize }}</h3>
+                    {% endwith %}
+                    <!-- commentlist -->
+                    <ol class="commentlist">
+                        {% for comment in comments %}
+                        <li class="depth-1 comment">
+                            <div class="comment__content">
+                                <div class="comment__info">
+                                    <cite>{{ comment.name }}</cite>
+                                    <div class="comment__meta">
+                                        <time class="comment__time">{{ comment.created }}</time>
+                                    </div>
+                                </div>
+                                <div class="comment__text">
+                                <p>{{ comment.body|linebreaks }}</p>
+                                </div>
+                            </div>
+                        </li> <!-- end comment level 1 -->
+                        {% empty %}
+                        <p>no comments yet.</p>
+                        {% endfor %}
+                    </ol> <!-- end commentlist -->
+                    <!-- respond
+                    ================================================== -->
+                    <div class="respond">
+                        {% if new_comment %}
+                        <h3 class="h2">Your comment has been added.</h3>
+                        {% else %}
+                        <h3 class="h2">Add Comment</h3>
+                        <form method="post" action=".">
+                            <fieldset>
+                                <div class="form-field">
+                                        <input name="name" type="text" id="name" class="full-width" placeholder="Your Name" value="">
+                                </div>
+                                <div class="form-field">
+                                        <input name="email" type="text" id="email" class="full-width" placeholder="Your Email" value="">
+                                </div>
+                                <div class="message form-field">
+                                    <textarea name="body" id="body" class="full-width" placeholder="Your Message"></textarea>
+                                </div>
+                                {% csrf_token %}
+                                <button type="submit" class="submit btn--primary btn--large full-width">Submit</button>
+                            </fieldset>
+                        </form> <!-- end form -->
+                        {% endif %}
+                    </div> <!-- end respond -->
+
+                </div> <!-- end col-full -->
+
+            </div> <!-- end row comments -->
+        </div> <!-- end comments-wrap -->
    </section>
 {% endblock %}

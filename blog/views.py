@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Post
+from .models import Post, Comment
 from django.core.paginator import Paginator, EmptyPage,\
                                   PageNotAnInteger
 from django.views.generic import ListView
-from .contact import EmailContactForm
+from .forms import EmailContactForm, CommentForm
 from django.core.mail import send_mail
 
 class IndexView(ListView):
@@ -32,8 +32,31 @@ def index(request):
 
 def post_detail(request, post):
     post = get_object_or_404(Post, slug=post, status='published')
+
+    #List of active comments for this post
+    comments = post.comments.filter(active=True)
+
+    new_comment = None
+
+    if request.method == 'POST':
+        # A comment was posted
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            # create a comment object but don't save to db yet
+            new_comment = comment_form.save(commit=False)
+            # assign the current post to the comment
+            new_comment.post = post
+            # save the comment to the db
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+
     return render(request,
-                  'blog/detail.html', {'post': post})
+                  'blog/detail.html',
+                  {'post': post,
+                   'comments': comments,
+                   'new_comment': new_comment,
+                   'comment_form': comment_form})
 
 def contact_us(request):
     if request.method == 'POST':
