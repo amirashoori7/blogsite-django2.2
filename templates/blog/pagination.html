@@ -2,12 +2,12 @@
             <div class="col-full">
                 <nav class="pgn">
                     <ul>
-                        {% if page_obj.has_previous %}
-                        <li><a class="pgn__prev" href="?page={{ page_obj.previous_page_number }}">Prev</a></li>
+                        {% if page.has_previous %}
+                        <li><a class="pgn__prev" href="?page={{ page.previous_page_number }}">Prev</a></li>
                         {% endif %}
-                        <li><a class="pgn__num" href="">{{ page_obj.number }}</a></li>
-                        {% if page_obj.has_next %}
-                        <li><a class="pgn__next" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                        <li><a class="pgn__num" href="">{{ page.number }}</a></li>
+                        {% if page.has_next %}
+                        <li><a class="pgn__next" href="?page={{ page.next_page_number }}">Next</a></li>
                         {% endif %}
                     </ul>
                 </nav>

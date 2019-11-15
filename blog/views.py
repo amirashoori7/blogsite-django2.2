@@ -2,19 +2,27 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post, Comment
 from django.core.paginator import Paginator, EmptyPage,\
                                   PageNotAnInteger
-from django.views.generic import ListView
+#from django.views.generic import ListView
 from .forms import EmailContactForm, CommentForm
 from django.core.mail import send_mail
+from taggit.models import Tag
 
+'''
 class IndexView(ListView):
     queryset = Post.published.all()
+    tags = Post.tags.all()
     context_object_name = 'posts'
     paginate_by = 8
     template_name = 'blog/index.html'
+'''
 
-"""
-def index(request):
+def index(request, tag_slug=None):
     object_list = Post.published.all()
+    tags = Post.tags.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        object_list = Tag.objects.all()
     paginator = Paginator(object_list, 8)
     page = request.GET.get('page')
     try:
@@ -27,8 +35,8 @@ def index(request):
         posts = paginator.page(paginator.num_pages)
     return render(request,
                   'blog/index.html',
-                   {'page': page, 'posts': posts})
-"""
+                   {'page': page, 'posts': posts, 'tag':tag, 'tags':tags})
+
 
 def post_detail(request, post):
     post = get_object_or_404(Post, slug=post, status='published')

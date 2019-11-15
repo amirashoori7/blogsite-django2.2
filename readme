@@ -1,0 +1,4 @@
+in order to use python shell and django models:
+add this to the activate script of the virtualenv:
+
+export DJANGO_SETTINGS_MODULE=blogsite.settings
