@@ -27,8 +27,8 @@ class Post(models.Model):
     published=PublishedManager()
     tags=TaggableManager()
 
-#    def get_absolute_url(self):
-#        return reverse('blog:post_detail', args=[self.slug,])
+    def get_absolute_url(self):
+        return "blog/post_detail/{self.slug}"
 
 class Meta:
     ordering = ('-publish',)
