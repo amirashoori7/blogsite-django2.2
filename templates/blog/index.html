@@ -1,5 +1,5 @@
 {% extends "blog/base.html" %}
-
+{% load blog_tags %}
 {% block title %}TEJARONIC{% endblock %}
 
 {% block content %}
@@ -30,7 +30,7 @@
                         </div>
                         <div class="entry__excerpt">
                             <p>
-                                {{ post.body|truncatewords:30|linebreaks }}
+                                {{ post.body|markdown|truncatewords_html:30 }}
                             </p>
                         </div>
                         <!--

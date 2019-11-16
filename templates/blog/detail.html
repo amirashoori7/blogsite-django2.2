@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load blog_tags %}
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
@@ -26,7 +27,7 @@
             </div> <!-- end s-content__header -->
 
             <div class="col-full s-content__main">
-                <p class="lead">{{post.body|linebreaks}}</p>
+                <p class="lead">{{ post.body|markdown }}</p>
                 
               <div class="s-content__author">
                     <img src="" alt="">

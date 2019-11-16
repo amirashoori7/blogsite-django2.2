@@ -1,3 +1,5 @@
+{% load blog_tags %}
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -115,6 +117,8 @@
                         <li><a href="style-guide.html" title="">Styles</a></li>
                         <li><a href="about.html" title="">About</a></li>
                         <li><a href="contact/" title="">Contact</a></li>
+                        <li><a href="" title="">Total Posts:{% total_posts %}</a></li>
+
                     </ul> <!-- end header__nav -->
 
                     <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
