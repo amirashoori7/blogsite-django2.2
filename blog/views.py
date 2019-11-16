@@ -6,6 +6,7 @@ from django.core.paginator import Paginator, EmptyPage,\
 from .forms import EmailContactForm, CommentForm
 from django.core.mail import send_mail
 from taggit.models import Tag
+from django.db.models import Count
 
 '''
 class IndexView(ListView):
@@ -22,7 +23,7 @@ def index(request, tag_slug=None):
     tag = None
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
-        object_list = Tag.objects.all()
+        object_list = object_list.filter(tags__in=[tag])
     paginator = Paginator(object_list, 8)
     page = request.GET.get('page')
     try:
@@ -40,12 +41,9 @@ def index(request, tag_slug=None):
 
 def post_detail(request, post):
     post = get_object_or_404(Post, slug=post, status='published')
-
     #List of active comments for this post
     comments = post.comments.filter(active=True)
-
     new_comment = None
-
     if request.method == 'POST':
         # A comment was posted
         comment_form = CommentForm(data=request.POST)
@@ -58,13 +56,19 @@ def post_detail(request, post):
             new_comment.save()
     else:
         comment_form = CommentForm()
-
+    # List of similar posts
+    post_tags_ids = post.tags.values_list('id', flat=True)
+    similar_posts = Post.published.filter(tags__in=post_tags_ids)\
+                                         .exclude(id=post.id)
+    similar_posts = similar_posts.annotate(same_tag=Count('tags'))\
+                                          .order_by('-same_tag', '-publish')[:4]
     return render(request,
                   'blog/detail.html',
                   {'post': post,
                    'comments': comments,
                    'new_comment': new_comment,
-                   'comment_form': comment_form})
+                   'comment_form': comment_form,
+                   'similar_posts': similar_posts})
 
 def contact_us(request):
     if request.method == 'POST':

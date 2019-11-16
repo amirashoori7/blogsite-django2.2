@@ -7,12 +7,13 @@
  <section class="s-content">
 
         <div class="row masonry-wrap">
+          {% if tag %}
+          <h3>Posts tagged with "{{ tag.name }}"</h2>
+          {% endif %}
             <div class="masonry">
 
                 <div class="grid-sizer"></div>
-                {% if tag %}
-<h2>Posts tagged with "{{ tag.name }}"</h2>
-{% endif %}
+
 {% for post in posts %}
 <article class="masonry__brick entry format-standard" data-aos="fade-up">
                     <div class="entry__thumb">
@@ -57,6 +58,7 @@
                 <div class="tagcloud">
                     {% for tag in tags %}
                     <a href="{% url 'blog:index' tag.slug %}">{{ tag.name }}</a>
+                    {% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </div> <!-- end tagcloud -->
             </div> <!-- end tags -->
